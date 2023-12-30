@@ -9,13 +9,18 @@ def get_rarity_from_filename(filename):
         return 'common'
 
 def generate_cdf_file(card_image_path):
-    card_id = os.path.splitext(os.path.basename(card_image_path))[0].split("_", 1)[1].replace(" ", "_").lower()
+    filename_no_extension = os.path.splitext(os.path.basename(card_image_path))[0]
+    card_id = filename_no_extension.split("_", 1)[1].replace(" ", "_").lower()
     card_id = re.sub(r'\W+', '_', card_id)
-    card_id = f'card_{card_id}'
+    
+    # Remove rarity suffix from card_id
+    card_id = re.sub(r'_(com|common|unc|uncommon|rare|anc|ancient|leg|legendary)$', '', card_id)
 
-    image_name = os.path.splitext(os.path.basename(card_image_path))[0].split("_", 1)[1]
+    # Remove rarity suffix from image_name
+    image_name = filename_no_extension.split("_", 1)[1]
+    image_name = re.sub(r'_(com|common|unc|uncommon|rare|anc|ancient|leg|legendary)$', '', image_name)
 
-    illustration_path = f'inscryption act 2 art pack/{os.path.splitext(os.path.basename(card_image_path))[0]}'
+    illustration_path = f'inscryption act 2 art pack/{filename_no_extension}'
 
     rarity = get_rarity_from_filename(os.path.basename(card_image_path))
 
@@ -31,8 +36,7 @@ DropWeight=10
 IllustrationPath={illustration_path}
 '''
 
-    cdf_name = os.path.splitext(os.path.basename(card_image_path))[0]
-    cdf_name = re.sub(r'\W+', '_', cdf_name)
+    cdf_name = re.sub(r'\W+', '_', filename_no_extension)
     cdf_name = f'{cdf_name}.cdf'
 
     with open(cdf_name, 'w') as file:
