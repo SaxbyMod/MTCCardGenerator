@@ -16,9 +16,10 @@ def generate_cdf_file(card_image_path):
     # Remove rarity suffix from card_id
     card_id = re.sub(r'_(com|common|unc|uncommon|rare|anc|ancient|leg|legendary)$', '', card_id)
 
-    # Remove rarity suffix from image_name
+    # Remove rarity suffix from image_name, replace underscores with spaces, and capitalize each word
     image_name = filename_no_extension.split("_", 1)[1]
     image_name = re.sub(r'_(com|common|unc|uncommon|rare|anc|ancient|leg|legendary)$', '', image_name)
+    image_name = image_name.replace('_', ' ').title()
 
     illustration_path = f'inscryption act 2 art pack/{filename_no_extension}'
 
