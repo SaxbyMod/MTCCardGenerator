@@ -10,7 +10,7 @@ def get_rarity_from_filename(filename):
 
 def generate_cdf_file(card_image_path):
     filename_no_extension = os.path.splitext(os.path.basename(card_image_path))[0]
-    card_id = filename_no_extension.split("_", 1)[1].replace(" ", "_").lower()
+    card_id = filename_no_extension.replace(" ", "_").lower()
     card_id = re.sub(r'\W+', '_', card_id)
     
     # Remove rarity suffix from card_id
@@ -21,17 +21,17 @@ def generate_cdf_file(card_image_path):
     image_name = re.sub(r'_(com|common|unc|uncommon|rare|anc|ancient|leg|legendary)$', '', image_name)
     image_name = image_name.replace('_', ' ').title()
 
-    illustration_path = f'inscryption act 2 art pack/{filename_no_extension}'
+    illustration_path = f'inscryption rulebook/{filename_no_extension}'
 
     rarity = get_rarity_from_filename(os.path.basename(card_image_path))
 
     cdf_data = f'''
-EditionID=inscryption_act_2_art_pack
+EditionID=inscryption_rulebook
 CardID={card_id}
 RarityLevel={rarity}
 
 Name={image_name}
-Category=Inscryption Act2 Art Pack
+Category=Inscryption Rulebook
 DropWeight=10
 
 IllustrationPath={illustration_path}
@@ -44,7 +44,7 @@ IllustrationPath={illustration_path}
         file.write(cdf_data)
 
 # Fetching images from 2 folders up > Assets > Inscryption_Finale_Cards
-cards_folder = os.path.abspath(os.path.join(os.getcwd(), "../../Assets/inscryption act 2 art pack"))
+cards_folder = os.path.abspath(os.path.join(os.getcwd(), "../../Assets/inscryption rulebook"))
 for filename in os.listdir(cards_folder):
     if filename.endswith(".png"):
         card_image_path = os.path.join(cards_folder, filename)
