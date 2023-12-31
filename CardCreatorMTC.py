@@ -21,17 +21,17 @@ def generate_cdf_file(card_image_path):
     image_name = re.sub(r'_(com|common|unc|uncommon|rare|anc|ancient|leg|legendary)$', '', image_name)
     image_name = image_name.replace('_', ' ').title()
 
-    illustration_path = f'inscryption rulebook/{filename_no_extension}'
+    illustration_path = f'[DIRPATHINSERT]/{filename_no_extension}'
 
     rarity = get_rarity_from_filename(os.path.basename(card_image_path))
 
     cdf_data = f'''
-EditionID=inscryption_rulebook
+EditionID=inscryption_act_2_art_pack
 CardID={card_id}
 RarityLevel={rarity}
 
 Name={image_name}
-Category=Inscryption Rulebook
+Category=Inscryption Act2 Art Pack
 DropWeight=10
 
 IllustrationPath={illustration_path}
@@ -44,7 +44,7 @@ IllustrationPath={illustration_path}
         file.write(cdf_data)
 
 # Fetching images from 2 folders up > Assets > Inscryption_Finale_Cards
-cards_folder = os.path.abspath(os.path.join(os.getcwd(), "../../Assets/inscryption rulebook"))
+cards_folder = os.path.abspath(os.path.join(os.getcwd(), "../../Assets/[DIRPATHINSERT]"))
 for filename in os.listdir(cards_folder):
     if filename.endswith(".png"):
         card_image_path = os.path.join(cards_folder, filename)
